@@ -1,0 +1,91 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+            "label": "C/C++ GCC: Create CMake Cache Files for Pazu Resource (Debug)",
+            "icon": {
+                "id": "alert",
+                "color": "terminal.ansiYellow"
+            },
+            "type": "shell",
+            "command": "cmake",
+            "args": ["-G", "MinGW Makefiles", "-B", "${workspaceFolder}\\Build\\Debug", "-S", "${workspaceFolder}", "-D", "CMAKE_BUILD_TYPE=Debug" ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "none",
+            }
+        },
+        {
+            "label": "C/C++ GCC: Create CMake Cache Files for Pazu Resource (Release)",
+            "icon": {
+                "id": "alert",
+                "color": "terminal.ansiYellow"
+            },
+            "type": "shell",
+            "command": "cmake",
+            "args": ["-G", "MinGW Makefiles", "-B", "${workspaceFolder}\\Build\\Release", "-S", "${workspaceFolder}", "-D", "CMAKE_BUILD_TYPE=Release" ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "none",
+            }
+        },
+		{
+			"label": "C/C++ GCC: Debug Build Pazu Resource",
+			"icon": {
+				"id": "alert",
+				"color": "terminal.ansiYellow"
+			},
+			"type": "shell",
+			"command": "cmake --build . --target install --config Debug",
+			"args": [],
+			"options": {
+				"cwd": "${workspaceFolder}/Build/Debug"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+            "dependsOn": [
+                "C/C++ GCC: Create CMake Cache Files for Pazu Resource (Debug)"
+            ],
+            "dependsOrder": "sequence"
+		},
+		{
+			"label": "C/C++ GCC: Release Build Pazu Resource",
+			"icon": {
+				"id": "alert",
+				"color": "terminal.ansiYellow"
+			},
+			"type": "shell",
+			"command": "cmake --build . --target install --config Release --parallel 8",
+			"args": [],
+			"options": {
+				"cwd": "${workspaceFolder}/Build/Release"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				// "isDefault": true
+			},
+            "dependsOn": [
+                "C/C++ GCC: Create CMake Cache Files for Pazu Resource (Release)"
+            ],
+            "dependsOrder": "sequence"
+		}
+	]
+}

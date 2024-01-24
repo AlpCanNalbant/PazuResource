@@ -1,0 +1,3 @@
+[submodule "deps/WinAPICommon"]
+	path = deps/WinAPICommon
+	url = https://github.com/AlpCanNalbant/WinAPICommon.git
