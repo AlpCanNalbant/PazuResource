@@ -25,14 +25,14 @@ set_target_properties(${PAZU_RESGEN_PROJECT_NAME} PROPERTIES OUTPUT_NAME Resourc
 target_link_libraries(${PAZU_RESGEN_PROJECT_NAME} PRIVATE mingw32 ${PROJECT_NAME} -static-libgcc -static-libstdc++ -static Threads::Threads)
 
 message("Installing Pazu resource generator project")
+set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR})
 install(TARGETS ${PROJECT_NAME} ${PAZU_RESGEN_PROJECT_NAME}
     RUNTIME DESTINATION ${PazuResource_INSTALL_HOME}
 	ARCHIVE DESTINATION ${PazuResource_INSTALL_HOME})
 
-set(GLOB_RECURSE PazuResourceGenerator_EXAMPLE_DATA CONFIGURE_DEPENDS "./samples/*")
+file(GLOB_RECURSE PazuResourceGenerator_EXAMPLE_DATA CONFIGURE_DEPENDS "samples/*")
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
 	message("Installing sample resource files of the Pazu resource generator project")
-	install(FILES PazuResourceGenerator_EXAMPLE_DATA DESTINATION "bin/data"
-			PERMISSIONS OWNER_WRITE OWNER_READ)
+	install(DIRECTORY samples/ DESTINATION "bin/Debug/data")
 endif()

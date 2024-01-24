@@ -7,9 +7,9 @@
             "program": "${workspaceFolder}/bin/Debug/ResourceGenerator.exe",
             "args": [
                 "Resource/Res.txt",
-                "${workspaceFolder}/bin/Debug/Res.txt",
+                "${workspaceFolder}/bin/Debug/data/Res.txt",
                 "Resource/Res2.txt",
-                "${workspaceFolder}/bin/Debug/Res2.txt"
+                "${workspaceFolder}/bin/Debug/data/Res2.txt"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

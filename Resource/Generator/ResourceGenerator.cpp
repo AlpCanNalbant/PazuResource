@@ -4,7 +4,6 @@
 #include <fstream>
 #include <algorithm>
 #include <filesystem>
-#include "WinAPICommon.hpp"
 #include "ResourceGenerator.hpp"
 #include "ResourceNames.hpp"
 
@@ -131,6 +130,7 @@ namespace Pazu::Impl
 						   "// Copyright (c) 2024 Johnny Borov <JohnnyBorov@gmail.com>. Released under MIT License.\n"
 						   "\n"
 						   "#pragma once\n"
+						   "#include <string_view>\n"
 						   "\n"
 				   		   "namespace Pazu\n"
 				   		   "{\n"
@@ -207,7 +207,8 @@ namespace Pazu::Impl
 				   "#pragma once\n"
 				   "#include <string_view>\n"
 				   "#include <unordered_map>\n"
-				   "#include <optional>\n";
+				   "#include <optional>\n"
+				   "#include \"WinAPICommon.hpp\"\n";
 
 			outAllRes(outResIncl);
 
@@ -245,7 +246,6 @@ namespace Pazu::Impl
 				Wcm::Log->Error("Error occurred while writing to source file of resource handle.").Sub("ResourceHandleFile", resourceHandleFile);
 				return EXIT_FAILURE;
 			}
-			ofs.close(); // Temporarily... delete this.
 
 			Wcm::Log->Info("Source file of resource handle is successfully created.").Sub("ResourceHandleFile", resourceHandleFile);
 			return EXIT_SUCCESS;
