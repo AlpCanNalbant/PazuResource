@@ -2,16 +2,16 @@ cmake_minimum_required(VERSION 3.28 FATAL_ERROR)
 project(PazuResource LANGUAGES CXX)
 set(PAZU_RESGEN_PROJECT_NAME "PazuResourceGenerator" CACHE STRING "The name of the Pazu resource generator project." FORCE)
 
-set(PazuResource_DEPS_HOME "${CMAKE_SOURCE_DIR}/deps")
+set(PazuResource_DEPS_HOME "${CMAKE_CURRENT_SOURCE_DIR}/deps")
 add_subdirectory("${PazuResource_DEPS_HOME}/WinAPICommon")
 
 set(PazuResource_INSTALL_HOME "${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}" CACHE STRING "The installation base directory of Pazu resource generator project." FORCE)
 
-file(GLOB PazuResource_SOURCE CONFIGURE_DEPENDS "./Resource/*.hpp" "./Resource/*.inl" "./Resource/*.cpp")
+file(GLOB PazuResource_SOURCE CONFIGURE_DEPENDS "./Pazu/*.hpp" "./Pazu/*.inl" "./Pazu/*.cpp")
 
 add_library(${PROJECT_NAME} STATIC ${PazuResource_SOURCE})
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD ${WINAPICOMMON_CPP_VERSION} CXX_STANDARD_REQUIRED ON CXX_EXTENSIONS OFF LINKER_LANGUAGE CXX)
-target_include_directories(${PROJECT_NAME} INTERFACE ".")
+target_include_directories(${PROJECT_NAME} INTERFACE "." "deps/WinAPICommon/src")
 target_link_libraries(${PROJECT_NAME} INTERFACE WinAPICommon)
 
 set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
