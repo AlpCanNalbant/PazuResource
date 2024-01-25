@@ -4,7 +4,8 @@ Pazu resource project is native CMake independent version of the [ResourceManage
 #
 1) After linked the PazuResource library to your own project, you can run the executable file with your content files as arguments.
 ```
-// GeneratorExec "FirstResourceName" "FirstResourceFile(relative or absolute path)" "SecondResourceName" "SecondResourceFile" ...
+// First is name of the resource, second is the relative or absolute path to that resource file...
+// GeneratorExec "ResourceName" "ResourceFile" "ResourceName2" "ResourceFile2" ...
 ResourceGenerator.exe "Resource/Res.txt" "data/Res.txt" "Resource/Res2.txt" "data/res2.txt"
 ```
 2) Then, after adding the Resource.hpp file to your project, you can access the data this way.
