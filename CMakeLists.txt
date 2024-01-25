@@ -11,14 +11,14 @@ file(GLOB PazuResource_SOURCE CONFIGURE_DEPENDS "./Pazu/*.hpp" "./Pazu/*.inl" ".
 
 add_library(${PROJECT_NAME} STATIC ${PazuResource_SOURCE})
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD ${WINAPICOMMON_CPP_VERSION} CXX_STANDARD_REQUIRED ON CXX_EXTENSIONS OFF LINKER_LANGUAGE CXX)
-target_include_directories(${PROJECT_NAME} INTERFACE "." "deps/WinAPICommon/src")
+target_include_directories(${PROJECT_NAME} INTERFACE ".")
 target_link_libraries(${PROJECT_NAME} INTERFACE WinAPICommon)
 
 set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
 
-file(GLOB PazuResourceGenerator_SOURCE CONFIGURE_DEPENDS "./Resource/Generator/*.hpp" "./Resource/Generator/*.inl" "./Resource/Generator/*.cpp")
+file(GLOB PazuResourceGenerator_SOURCE CONFIGURE_DEPENDS "./Pazu/Generator/*.hpp" "./Pazu/Generator/*.inl" "./Pazu/Generator/*.cpp")
 
 add_executable(${PAZU_RESGEN_PROJECT_NAME} ${PazuResourceGenerator_SOURCE})
 set_target_properties(${PAZU_RESGEN_PROJECT_NAME} PROPERTIES OUTPUT_NAME ResourceGenerator CXX_STANDARD ${WINAPICOMMON_CPP_VERSION} CXX_STANDARD_REQUIRED ON CXX_EXTENSIONS OFF)
