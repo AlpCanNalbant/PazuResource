@@ -2,6 +2,7 @@
 Build/
 temp/
 bin/
+obj/
 .vscode/*
 # Don't ignore specified folders and files.
 !.vscode/tasks.json
