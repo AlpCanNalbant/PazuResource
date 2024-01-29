@@ -1,5 +1,6 @@
 # Pazu Resource
 Pazu resource project is native CMake independent version of the [ResourceManager](https://github.com/Johnnyborov/ResourceManager) project.
+You can check out [Pazu Engine 2D](https://github.com/AlpCanNalbant/PazuEngine2D.git), with Pazu Resource integrated out of the box.
 
 #
 1) After linked the PazuResource library to your own project, you can run the executable file with your content files as arguments.
