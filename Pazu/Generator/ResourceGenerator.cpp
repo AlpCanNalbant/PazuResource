@@ -15,8 +15,10 @@ namespace Pazu::Impl
 		std::string resourceNames;
 		const auto parentDir = Wcm::GetSourceDirectory().parent_path();
 		const auto resourcesDir = parentDir / "Resources";
-		for (auto i = 1; i < argc; i += 2)
+		for (auto i = 0; i < argc; i += 2)
 		{
+			std::replace(Wcm::Begin(argv[i]), Wcm::End(argv[i]), '\\', '/');
+			std::replace(Wcm::Begin(argv[i + 1]), Wcm::End(argv[i + 1]), '\\', '/');
 			const auto resName = argv[i];
 			const auto resFile = argv[i + 1];
 			const auto resOutFile = (resourcesDir / resName).concat(".hpp").string();
@@ -42,9 +44,12 @@ namespace Pazu::Impl
 			{
 				Wcm::Log->Error("Base directory of resource cache is cannot created.", GetLastError()).Sub("Cache", cacheBackupFile.string());
 			}
-			else if (!Wcm::UpdateFileContent(resourceFile, cacheBackupFile))
+			else if (bool isError; !Wcm::UpdateFileContent(resourceFile, cacheBackupFile, isError))
 			{
-				Wcm::Log->Info("Resource is up to date.").Sub("Resource", resourceName);
+				if (!isError)
+				{
+					Wcm::Log->Info("Resource is up to date.").Sub("Resource", resourceName);
+				}
 				return 0;
 			}
 
@@ -139,14 +144,21 @@ namespace Pazu::Impl
 
 					if (resourceNames.length() <= 150)
 					{
-						ofs << resourceNames;
+						ofs << resourceNames; // std::quoted(resourceNames); for supporting backslashes.
 					}
 					else
 					{
 						for (auto i = 0uz; i < resourceNames.length(); ++i)
 						{
 							const auto c = resourceNames[i];
-							ofs << c;
+							// if (c != '\\')
+							// {
+								ofs << c;
+							// }
+							// else
+							// {
+								// ofs << R"(\)";
+							// }
 							if ((i % 150uz) == 0uz && c == ';' && (i + 1uz) < resourceNames.length())
 							{
 								ofs << "\n"
@@ -182,7 +194,11 @@ namespace Pazu::Impl
 			};
 			const auto outResIncl = [&](std::string_view name)
             {
+#ifdef WCM_CPP23
 				if (name.contains('\\'))
+#else
+				if (name.find('\\') != std::string_view::npos)
+#endif
 				{
 					auto data = const_cast<std::string_view::pointer>(name.data());
 					std::replace(Wcm::Begin(data), Wcm::End(data), '\\', '/');
@@ -190,15 +206,10 @@ namespace Pazu::Impl
 				}
 				ofs << "#include \"Resources/" << name << ".hpp" << "\"\n";
             };
-			/*
-			const auto outResDecl = [&](std::string_view name)
-            {
-				ofs << "\tinline constexpr unsigned char _resource_" << ModifyFileName(name) << "_data[];\n";
-            };
-			*/
 			const auto outResElm = [&](std::string_view name)
             {
-				ofs << "\t\t\t{\"" << name << "\", _resource_" << ModifyFileName(name.cbegin(), name.cend()) << "_data},\n";
+				ofs << "\t\t\t{" << std::quoted(name) << ", {std::cbegin(_resource_" << ModifyFileName(name.cbegin(), name.cend()) << "_data), "
+					"std::cend(_resource_" << ModifyFileName(name.cbegin(), name.cend()) << "_data) - 1}},\n";
             };
 
 			ofs << "// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.\n"
@@ -216,10 +227,7 @@ namespace Pazu::Impl
 				   "namespace Pazu\n"
 				   "{\n";
 
-			// outAllRes(outResDecl);
-
-			ofs << // "\n"
-				   "\t[[nodiscard]] constexpr std::optional<std::basic_string_view<unsigned char>> GetResource(const Wcm::ByteCharacterStringLike auto &name) noexcept;\n"
+     		ofs << "\t[[nodiscard]] constexpr std::optional<std::basic_string_view<unsigned char>> GetResource(const Wcm::ByteCharacterStringLike auto &name) noexcept;\n"
 				   "\n"
 				   "\tnamespace\n"
 				   "\t{\n"
@@ -297,6 +305,18 @@ namespace Pazu::Impl
 			result[++i] = '_';
 			result[++i] = '_';
 			return;
+		// case '\\':
+		// 	result[i] = '_';
+		// 	result[++i] = '_';
+		// 	result[++i] = 'b';
+		// 	result[++i] = 's';
+		// 	result[++i] = 'l';
+		// 	result[++i] = 'a';
+		// 	result[++i] = 's';
+		// 	result[++i] = 'h';
+		// 	result[++i] = '_';
+		// 	result[++i] = '_';
+		// 	return;
 		default:
 			result[i] = mc;
 			return;
