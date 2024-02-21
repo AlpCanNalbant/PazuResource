@@ -64,7 +64,7 @@ set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
 
-file(GLOB PazuResourceGenerator_SOURCE CONFIGURE_DEPENDS "Pazu/ResourceGenerator/*.hpp" "Pazu/ResourceGenerator/*.inl" "Pazu/ResourceGenerator/*.cpp")
+file(GLOB PazuResourceGenerator_SOURCE CONFIGURE_DEPENDS "Pazu/Generator/*.hpp" "Pazu/Generator/*.inl" "Pazu/Generator/*.cpp")
 
 add_executable(${PAZU_RESGEN_PROJECT_NAME} ${PazuResourceGenerator_SOURCE})
 set_target_properties(${PAZU_RESGEN_PROJECT_NAME} PROPERTIES OUTPUT_NAME ResourceGenerator CXX_STANDARD ${WINAPICOMMON_CPP_VERSION} CXX_STANDARD_REQUIRED ON CXX_EXTENSIONS OFF)
