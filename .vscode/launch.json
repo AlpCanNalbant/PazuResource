@@ -6,10 +6,21 @@
             "request": "launch",
             "program": "${workspaceFolder}/bin/Debug/ResourceGenerator.exe",
             "args": [
-                "Resource/Res.txt",
-                "${workspaceFolder}/bin/Debug/data/Res.txt",
-                "Resource/Res2.txt",
-                "${workspaceFolder}/bin/Debug/data/Res2.txt"
+                // "--OutDir", "...an/absoulete/output/path/for/disk/resources...", // Optional when you have a resource generator configuration file or default value is sufficient.
+                "--BaseDirName", "SampleAssets", // Optional when its name is already "Assets" (default value) or you have a resource generator configuration file.
+                // The remaining arguments listed below are optional when you have a pre-created resource list file to read from (resource list file only mode).
+                "--ResList", // Optional when you do not have any resource to list (directory list only).
+                // "-SrcPath", // When this is written, only the source paths should be sent to the arguments for disk and binary resources. In such a case,
+                //    for binary resources, the conversion of source paths to destination paths is done by cutting down to the resource base directory name.
+                //    The same routine is applied for disk resources and after the path is trimmed, the resulting path is added to front of the output path.
+                // "-DstSrcPath", // Optional if "-SrcPath" was never written (enabled by default). Otherwise, it acts as a toggle switch. In such a case,
+                //    paths for both disk and binary resources should be specified in the order of first destination and then source path.
+                // "-Bin", // Optional when it is written first in the arguments or you do not have any binary resource.
+                "Resource/Res.txt", "${workspaceFolder}/SampleAssets/Res.txt",
+                "-Disk", // Optional when you do not have any disk resource.
+                "Resource/Res2.txt", "${workspaceFolder}/SampleAssets/Res2.txt",
+                "--DirList", // Optional when you do not have any directory of resources to list (resource list only).
+                "${workspaceFolder}/SampleAssets/Disk" // It will search recursively within each directory. You should create "*.res" extensioned files with the same name for each resource you have in the directory.
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
