@@ -1,1 +1,0 @@
-an example resource file with contents
