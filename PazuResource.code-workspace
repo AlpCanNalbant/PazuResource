@@ -70,7 +70,12 @@
 			"streambuf": "cpp",
 			"thread": "cpp",
 			"typeinfo": "cpp",
-			"variant": "cpp"
+			"variant": "cpp",
+			"condition_variable": "cpp",
+			"unordered_set": "cpp",
+			"mutex": "cpp",
+			"filesystem": "cpp",
+			"set": "cpp"
 		}
 	}
 }
