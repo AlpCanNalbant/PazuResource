@@ -1,5 +1,4 @@
 // Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
-// Copyright (c) 2024 Johnny Borov <JohnnyBorov@gmail.com>. Released under MIT License.
 
 namespace Pazu::Impl
 {
@@ -39,4 +38,15 @@ namespace Pazu::Impl
         result[j] = '\0';
         return std::unique_ptr<const char>{result};
     }
+
+	bool GenerateResourceFilesT::operator()(std::forward_iterator auto beginItr, const std::forward_iterator auto endItr) const noexcept
+        requires requires { { std::ranges::cdata(*beginItr) } -> std::convertible_to<const char *>; }
+	{
+		std::vector<const char *> argValues;
+		for (; beginItr != endItr; ++beginItr)
+		{
+			argValues.emplace_back(std::ranges::cdata(*beginItr));
+		}
+		return this->operator()(std::ranges::ssize(argValues), const_cast<char **>(argValues.data()));
+	}
 }

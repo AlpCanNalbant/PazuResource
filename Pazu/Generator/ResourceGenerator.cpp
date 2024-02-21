@@ -78,7 +78,6 @@ namespace Pazu::Impl
 		}
 
 		ofs << "// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.\n"
-			   "// Copyright (c) 2024 Johnny Borov <JohnnyBorov@gmail.com>. Released under MIT License.\n"
 			   "\n"
 			   "#pragma once\n"
 			   "\n"
@@ -135,7 +134,6 @@ namespace Pazu::Impl
 			if (ofs.is_open())
 			{
 				ofs << "// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.\n"
-					   "// Copyright (c) 2024 Johnny Borov <JohnnyBorov@gmail.com>. Released under MIT License.\n"
 					   "\n"
 					   "#pragma once\n"
 					   "#include <string_view>\n"
@@ -225,7 +223,6 @@ namespace Pazu::Impl
         };
 
 		ofs << "// Copyright (c) Alp Can Nalbant. Licensed under the MIT License.\n"
-			   "// Copyright (c) 2024 Johnny Borov <JohnnyBorov@gmail.com>. Released under MIT License.\n"
 			   "\n"
 			   "#pragma once\n"
 			   "#include <string_view>\n"
@@ -250,16 +247,9 @@ namespace Pazu::Impl
 
 		ofs << "\t\t};\n"
 			   "\t}\n"
+			   "}\n"
 			   "\n"
-			   "\tconstexpr std::optional<std::basic_string_view<unsigned char>> GetResource(const Wcm::ByteCharacterStringLike auto &name) noexcept\n"
-			   "\t{\n"
-			   "\t\tif (const auto pos = Resources.find(Wcm::ToStringView(name).data()); pos != Resources.cend())\n"
-			   "\t\t{\n"
-			   "\t\t\treturn std::make_optional(pos->second);\n"
-			   "\t\t}\n"
-			   "\t\treturn std::nullopt;\n"
-			   "\t}\n"
-			   "}\n";
+			   "#include \"Resource.inl\"";
 
 		if (ofs.close(); ofs.bad())
 		{
