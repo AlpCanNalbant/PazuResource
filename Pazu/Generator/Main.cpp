@@ -1,10 +1,10 @@
 // Copyright (c) Alp Can Nalbant. Licensed under the MIT License.
-// Copyright (c) 2024 Johnny Borov <JohnnyBorov@gmail.com>. Released under MIT License.
 
-#include "ResourceGenerator.hpp"
+#include "ResourceListGenerator.hpp"
+#include "ResourceGeneratorLauncher.hpp"
 
 int main(int argc, char *argv[])
 {
     Wcm::Log->OutputFile = Wcm::GetBaseDirectory() / "ResourceGenerator.log";
-    return Pazu::GenerateResourceFiles(argc, argv);
+    return Pazu::GenerateResourceList(argc, argv) && Pazu::LaunchResourceGenerator() ? EXIT_SUCCESS : EXIT_FAILURE;
 }
