@@ -5,6 +5,5 @@
 
 int main(int argc, char *argv[])
 {
-    Wcm::Log->OutputFile = Wcm::GetBaseDirectory() / "ResourceGenerator.log";
     return Pazu::GenerateResourceList(argc, argv) && Pazu::LaunchResourceGenerator() ? EXIT_SUCCESS : EXIT_FAILURE;
 }

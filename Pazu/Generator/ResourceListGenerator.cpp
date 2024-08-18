@@ -12,6 +12,18 @@ namespace Pazu::Impl
 			++argv;
 			--argc;
 		}
+
+		constexpr std::string_view logFileArgFlag = "--LogFile";
+        if (std::memcmp(*argv, logFileArgFlag.data(), logFileArgFlag.size()) == 0)
+        {
+			Wcm::Log->OutputFile = Wcm::ToWString(*(++argv)++);
+            ----argc;
+        }
+		else
+		{
+			Wcm::Log->OutputFile = Wcm::GetBaseDirectory() / "ResourceGenerator.log";
+		}
+
 		LoadConfiguration(argc, argv);
 		if (const int result = LoadList(); result <= 0)
 		{
